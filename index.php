@@ -1,12 +1,15 @@
 <?php
 include './lib/ini.php';
 include './views/main.php';
+if(isset($_GET['page'])){
 $page = $_GET['page'];
-$action = $_GET['action'];
 switch ($page) :
-	case 'registration' : include ('./views/register.php'); break; 
+	case 'registration' : include ('./lib/register.php'); break; 
 	endswitch;
-
+}
+if (isset($_GET['search'])) {
+	include('./lib/list_action.php');
+}
 
 
 

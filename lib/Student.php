@@ -43,4 +43,6 @@ class Student
 		$this->pswrd = $rand;
 		return $rand;
 	}
+
+	
 }
