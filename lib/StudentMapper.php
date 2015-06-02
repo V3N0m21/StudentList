@@ -43,6 +43,26 @@ class StudentMapper
 		return $student;
 		}
 	}
+
+	public function sortStudent($sort = 'name')
+	{
+		$sql = "SELECT * FROM Students";
+		switch ($sort) :
+		case 'name' : $sql .= " Order by Name";break;
+		case 'surname' : $sql .= " Order by Surname";break;
+		case 'groupNumber' : $sql .= " Order by GroupNumber";break;
+		case 'mark' : $sql .= " Order by Mark";break;
+		case 'local' : $sql .= " Order by Local";break;
+		case 'sex' : $sql .= " Order by Sex";break;
+		case 'dateBirth' : $sql .= " Order by BirthDate";break;
+		endswitch; 
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		$student = $result->fetch_all(MYSQLI_ASSOC);
+		return $student;
+
+	}
 	public function getStudent($pswrd)
 	{
 		$query = "SELECT * FROM Students WHERE pswrd='$pswrd'";

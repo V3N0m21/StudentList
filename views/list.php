@@ -1,12 +1,12 @@
 <table class="table">
 <tr>
-    <td>Имя</td>
-    <td>Фамилия</td>
-    <td>Пол</td>
-    <td>Группа</td>
-    <td>Средний бал</td>
-    <td>Местный/Приезжий</td>
-    <td>Год рождения</td>
+    <td><a href="?page=list&sort=name">Имя</a></td>
+    <td><a href="?page=list&sort=surname">Фамилия</td>
+    <td><a href="?page=list&sort=sex">Пол</td>
+    <td><a href="?page=list&sort=groupNumber">Группа</td>
+    <td><a href="?page=list&sort=mark">Средний бал</td>
+    <td><a href="?page=list&sort=local">Местный/Приезжий</td>
+    <td><a href="?page=list&sort=dateBirth">Год рождения</td>
 </tr>
 <?php for ($k = 0; $k < count($data); $k++): ?>
 <tr>
@@ -19,4 +19,5 @@
             <td><?=$data[$k]['BirthDate'] ?></td>
         </tr>
     <?php endfor ?>
+    <?php echo $text; ?>
 </table>
