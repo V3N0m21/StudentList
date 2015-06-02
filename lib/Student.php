@@ -13,15 +13,15 @@ class Student
 
 	public function __construct($data)
 	{
-		$this->name = $data['name'];
-		$this->surname = $data['surname'];
-		$this->sex = $data['sex'];
-		$this->groupNumber = $data['groupNumber'];
-		$this->email = $data['email'];
-		$this->mark = $data['mark'];
-		$this->local = $data['local'];
-		$this->birthDate = $data['birthDate'];
-		$this->pswrd = $this->generatePswrd();
+		$this->name = $data['Name'];
+		$this->surname = $data['Surname'];
+		$this->sex = $data['Sex'];
+		$this->groupNumber = $data['GroupNumber'];
+		$this->email = $data['Email'];
+		$this->mark = $data['Mark'];
+		$this->local = $data['Local'];
+		$this->birthDate = $data['BirthDate'];
+		$this->pswrd = $data['pswrd'];
 	}
 
 	public function getStudentInfo()
@@ -31,18 +31,15 @@ class Student
 			$this->surname,
 			$this->sex,
 			$this->groupNumber,
+			$this->email,
 			$this->mark,
 			$this->local,
-			$this->birthDate
+			$this->birthDate,
+			$this->pswrd
 			);
 		return $info;
 	}
-	public function generatePswrd()
-	{
-		$rand = substr(md5(microtime()),rand(0,26),5);
-		$this->pswrd = $rand;
-		return $rand;
-	}
-
 	
+
+
 }

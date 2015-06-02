@@ -13,6 +13,13 @@ class StudentMapper
 		$stmt->execute();
 		$stmt->store_result();
 	}
+	public function updateStudent(Student $student)
+	{
+		$stmt = $this->db->prepare("UPDATE Students SET Name=?,Surname=?, Sex=?, GroupNumber=?,Email=?, Mark=?,Local=?,BirthDate=? WHERE pswrd= ?");
+		$stmt->bind_param('sssssssss', $student->name, $student->surname, $student->sex, $student->groupNumber, $student->email, $student->mark, $student->local, $student->birthDate, $student->pswrd);
+		$stmt->execute();
+		$stmt->store_result();
+	}
 
 	public function searchStudents($string = '')
 	{
@@ -24,7 +31,7 @@ class StudentMapper
 			$student = $result->fetch_all(MYSQLI_ASSOC);
 			return $student;
 		} else {
-			$sql = "SELECT * FROM Students WHERE CONCAT(Name, Surname, GroupNumber, Email) like ?"; 
+			$sql = "SELECT * FROM Students WHERE CONCAT(Name, Surname, GroupNumber, Mark, BirthDate) like ?"; 
 		
 		$stmt = $this->db->prepare($sql);
 		$reg = "%$string%";
@@ -35,5 +42,28 @@ class StudentMapper
 		$student = $result->fetch_all(MYSQLI_ASSOC);
 		return $student;
 		}
+	}
+	public function getStudent($pswrd)
+	{
+		$query = "SELECT * FROM Students WHERE pswrd='$pswrd'";
+		$result = $this->db->query($query);
+		$student = $result->fetch_array(MYSQLI_ASSOC);
+		return $student;
+	}
+
+	public function generatePswrd()
+	{
+		$rand = substr(md5(microtime()),rand(0,26),5);
+		$this->pswrd = $rand;
+		return $rand;
+	}
+
+	public function checkEmail($email)
+	{
+		$query = "SELECT * FROM Students WHERE Email= '$email'";
+		$result = $this->db->query($query);
+		if ($result->num_rows === 0)
+			{return 1;} else {return 0;}
+
 	}
 }
