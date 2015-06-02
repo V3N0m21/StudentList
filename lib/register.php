@@ -2,9 +2,6 @@
 include $_SERVER['DOCUMENT_ROOT']. "/lib/ini.php";
 #include $_SERVER['DOCUMENT_ROOT']. "/views/main.php";  
 
-?>
-<?php
-
 #$errors = array();
 
 
