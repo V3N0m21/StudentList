@@ -6,10 +6,10 @@
 <input type="radio" name="Sex" value="M" checked>Мужской<br> <input type="radio" name="Sex" value="F">Женский<br><br>
 Номер группы:<br> <input type="text" name="GroupNumber" value="<?=$groupNumber;?>"><br>
 e-mail:<br> <input type="email" name="Email" value="<?=$email;?>"><br>
-Оценка за ЕГЭ:<br> <input type="text" name="Mark" value="<?=$mark;?>"><br><br>
-Местный\Приезжий: <br>Местный<input type="radio" name="Local" value="L" checked>
-					  Приезжий<input type="radio" name="Local" value="N">
-Год рождения:<br> <input type="text" name="BirthDate" value="<?=$birthDate;?>"><br>
+Оценка за ЕГЭ:<br> <input type="text" name="Mark" value="<?=$mark;?>"><br>
+Местный\Приезжий: <br><input type="radio" name="Local" value="L" checked>  Местный  <br>
+					  <input type="radio" name="Local" value="N">  Приезжий 
+<br>Год рождения:<br> <input type="text" name="BirthDate" value="<?=$birthDate;?>"><br>
 <?php if (!isset($_COOKIE['user'])) : ?>
 	<input type="submit" name="submit" value="Ввести данные">
 <?php else : ?>
