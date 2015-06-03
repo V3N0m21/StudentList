@@ -1,6 +1,6 @@
 <?php 
 include $_SERVER['DOCUMENT_ROOT']. "/lib/ini.php";
-#include $_SERVER['DOCUMENT_ROOT']. "/views/main.php";  
+include_once $_SERVER['DOCUMENT_ROOT']. "/views/main.php";  
 
 #$errors = array();
 
@@ -44,8 +44,8 @@ if(isset($_POST['submit']) || isset($_POST['edit']))
 			$student = new Student($data);
 			setcookie('user', $pass, time()+ 60 *60 *60*24*365,'/');
 			$save->saveStudent($student);
-
-			echo "Success!!";
+			header("Location: http://zend.tut/");
+			$text = "Success!!";
 		}
 		else{
 			$error = "email is already in database";
@@ -57,18 +57,18 @@ if(isset($_POST['submit']) || isset($_POST['edit']))
 			$data['pswrd'] = $pass;
 			$student = new Student($data);
 			$save->updateStudent($student);
-			echo "Student updated";
+			$text = "Student updated";
+			header("Location: http://zend.tut/");
 		}}
-		} else {
+		}  else {
 			foreach ($errors as $error => $value) {
-				echo $error;
-				echo $value;
+				echo $error . " : " . $value . "<br>";
 			}
-		}
-		header("Location: http://zend.tut/index.php?page=registration");
+				}
+		#header("Location: http://zend.tut/index.php?page=registration");
 }
 
-#include $_SERVER['DOCUMENT_ROOT']. "/views/reg.php";
+include $_SERVER['DOCUMENT_ROOT']. "/views/reg.php";
 /*echo <<<_END
 <form action="register.php" method="post">
 Имя:<br> <input type="text" name="name" value="$name"><br>

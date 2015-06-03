@@ -8,7 +8,7 @@ $stud = $data->getStudent($user);
 $student = new Student($stud);
 $info = $student->getStudentInfo();
 
-echo "Здравствуйте " . $info[0];
+echo "Здравствуйте " . $info[0] . "<br>";
 
         $name = $info[0];
         $surname = $info[1];
@@ -27,9 +27,9 @@ include './views/main.php';
 if(isset($_GET['page'])){
 $page = $_GET['page'];
 switch ($page) :
-	case 'registration' : include $_SERVER['DOCUMENT_ROOT']."/views/reg.php"; break;
+	case 'registration' : include $_SERVER['DOCUMENT_ROOT']."/lib/register.php"; break;
 	case 'list' : include $_SERVER['DOCUMENT_ROOT']."/lib/list_action.php";break; 
-        case 'dashboard' : include $_SERVER['DOCUMENT_ROOT']."/views/reg.php"; break;
+        case 'dashboard' : include $_SERVER['DOCUMENT_ROOT']."/lib/register.php"; break;
 	endswitch;
 }
 if (isset($_GET['search'])) {

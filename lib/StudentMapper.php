@@ -44,7 +44,7 @@ class StudentMapper
 		}
 	}
 
-	public function sortStudent($sort = 'name')
+	public function sortStudent($sort,$dir)
 	{
 		$sql = "SELECT * FROM Students";
 		switch ($sort) :
@@ -55,7 +55,11 @@ class StudentMapper
 		case 'local' : $sql .= " Order by Local";break;
 		case 'sex' : $sql .= " Order by Sex";break;
 		case 'dateBirth' : $sql .= " Order by BirthDate";break;
-		endswitch; 
+		endswitch;
+		switch($dir)  : 
+		case 'asc' : $sql .= " ASC";break;
+		case 'desc' : $sql .= " DESC";break;
+		endswitch;
 		$stmt = $this->db->prepare($sql);
 		$stmt->execute();
 		$result = $stmt->get_result();

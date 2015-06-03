@@ -1,5 +1,5 @@
 
-<form action="./lib/register.php" method="post">
+<form action="../lib/register.php" method="post">
 Имя:<br> <input type="text" name="Name" value="<?=$name;?>"><br>
 Фамилия:<br> <input type="text" name="Surname" value="<?=$surname;?>"><br>
 Пол:<br>
