@@ -62,7 +62,7 @@ if(isset($_POST['submit']) || isset($_POST['edit']))
 		}}
 		}  else {
 			foreach ($errors as $error => $value) {
-				echo $error . " : " . $value . "<br>";
+				echo $value . "<br>";
 			}
 				}
 		#header("Location: http://zend.tut/index.php?page=registration");
