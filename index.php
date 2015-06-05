@@ -1,59 +1,43 @@
 <?php
-
-include './lib/ini.php';
-if(isset($_COOKIE['user']))
-{$user = $_COOKIE['user'];
+include_once './views/main.php';
 $data = new StudentMapper($conn);
-$stud = $data->getStudent($user);
-$student = new Student($stud);
-$info = $student->getStudentInfo();
-
-echo "Здравствуйте " . $info[0] . "<br>";
-
-        $name = $info[0];
-        $surname = $info[1];
-        $sex = $local = "";
-        $groupNumber = $info[3];
-        $email = $info[4];
-        $mark = $info[5];
-        $birthDate = $info[7];
-        $pass = $info[8];
+$sort = 'mark';
+$dir = 'desc';
+$columns = array('name', 'surname', 'sex', 'groupNumber', 'mark', 'local', 'dateBirth');
+/*if (isset($_GET['search'])) {
+	$search = $_GET['search'];
+	$students = $data->searchStudents($search);
 } else {
-$name = $surname = $sex = $groupNumber = $email = $mark = $local = $birthDate = "";
+$students = $data->listStudents();
+}*/
+if (isset($_GET['dir']) && in_array($_GET['dir'], array('asc', 'desc'))) {
+	$dir = $_GET['dir'];
+}
+if (isset($_GET['sort']) && in_array($_GET['sort'], $columns)) {
+	$sort = $_GET['sort'];
 }
 
-include './views/main.php';
-#include $_SERVER['DOCUMENT_ROOT']."/lib/list_action.php";
-if(isset($_GET['page'])){
-$page = $_GET['page'];
-switch ($page) :
-	case 'registration' : include $_SERVER['DOCUMENT_ROOT']."/lib/register.php"; break;
-	case 'list' : include $_SERVER['DOCUMENT_ROOT']."/lib/list_action.php";break; 
-        case 'dashboard' : include $_SERVER['DOCUMENT_ROOT']."/lib/register.php"; break;
-	endswitch;
-}
 if (isset($_GET['search'])) {
-	include('./lib/list_action.php');
+	$search = $_GET['search'];
+	$students = $data->searchStudents($search);
+} else {
+$students = $data->sortStudent($sort, $dir);
+}
+$current = 1;
+
+$rows = count($students);
+#echo $rows;
+$check = new Validation;
+$paginator = new Paginator;
+$pages = $paginator->countPages($rows);
+
+if(isset($_GET['current'])){
+	$current = $_GET['current'];
 }
 
-
-
-
-
-
-
-/*$stud = array('name' => 'venom',
-        'surname' =>'lolov',
-        'sex'=> 'M',
-        'groupNumber' => 999,
-        'email' => 'lolov@lolka',
-        'mark' => 999,
-        'local' => 'L',
-        'birthDate' => 1989);
-$student = new Student($stud);
-$pass = $student->generatePswrd();
-$save = new StudentMapper($conn);
-echo $student->pswrd;
-#$save->saveStudent($student);
-*/
-
+$currentItem = $paginator->setPages($current,$rows);
+#var_dump($students);
+#echo $students[2]->name;exit;
+#var_dump($pages);
+#$valid = $check->validate($student);
+include_once './views/list.php';

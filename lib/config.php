@@ -1,5 +1,5 @@
 <?php
 $hn = 'localhost';
-$dbc = 'publications';
+$dbn = 'publications';
 $un = 'user';
 $pw = '1234567';

@@ -11,7 +11,12 @@ class Student
 	public $birthDate;
 	public $pswrd;
 
-	public function __construct($data)
+	public function __construct()
+	{
+
+	}
+
+	public function setAttributes($data)
 	{
 		$this->name = $data['Name'];
 		$this->surname = $data['Surname'];
@@ -24,7 +29,7 @@ class Student
 		$this->pswrd = $data['pswrd'];
 	}
 
-	public function getStudentInfo()
+	public function getAttributes()
 	{
 		$info = array(
 			$this->name,
@@ -39,7 +44,12 @@ class Student
 			);
 		return $info;
 	}
-	
 
+	public function generatePswrd()
+	{
+		$rand = substr(md5(microtime()),rand(0,26),5);
+		$this->pswrd = $rand;
+		return $rand;
+	}
 
 }

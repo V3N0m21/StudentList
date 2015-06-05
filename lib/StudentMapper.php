@@ -2,10 +2,9 @@
 class StudentMapper
 {
 	private $db;
-	public function __construct(mysqli $conn){
+	public function __construct(mysqli $conn) {
 		$this->db = $conn;
 	}
-
 	public function saveStudent(Student $student)
 	{
 		$stmt = $this->db->prepare("INSERT INTO Students (Name, Surname, Sex, GroupNumber, Email, Mark, Local, BirthDate, pswrd) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
@@ -13,6 +12,7 @@ class StudentMapper
 		$stmt->execute();
 		$stmt->store_result();
 	}
+	
 	public function updateStudent(Student $student)
 	{
 		$stmt = $this->db->prepare("UPDATE Students SET Name=?,Surname=?, Sex=?, GroupNumber=?,Email=?, Mark=?,Local=?,BirthDate=? WHERE pswrd= ?");
@@ -21,27 +21,39 @@ class StudentMapper
 		$stmt->store_result();
 	}
 
-	public function searchStudents($string = '')
+	public function checkEmail($email)
 	{
-		if ($string === '') {
-			$sql = "SELECT * FROM Students ORDER BY ID";
-			$stmt = $this->db->prepare($sql);
-			$stmt->execute();
-			$result = $stmt->get_result();
-			$student = $result->fetch_all(MYSQLI_ASSOC);
-			return $student;
-		} else {
-			$sql = "SELECT * FROM Students WHERE CONCAT(Name, Surname, GroupNumber, Mark, BirthDate) like ?"; 
-		
-		$stmt = $this->db->prepare($sql);
-		$reg = "%$string%";
-		$stmt->bind_param('s', $reg);
-		$stmt->execute();
-		$result = $stmt->get_result();
-		#$data = $stmt->store_result();
-		$student = $result->fetch_all(MYSQLI_ASSOC);
+		$query = "SELECT * FROM Students WHERE Email='$email'";
+		$result = $this->db->query($query);
+		$result = $result->num_rows;
+		if ($result == 0) {
+			return 1;
+		} else {return "Email is not unique";}
+	}
+
+	public function getStudent($pswrd)
+	{
+		$query = "SELECT * FROM Students WHERE pswrd='$pswrd'";
+		$result = $this->db->query($query);
+		$data = $result->fetch_array(MYSQLI_ASSOC);
+		$student = new Student;
+		$student->setAttributes($data);
 		return $student;
-		}
+	}
+
+	public function listStudents()
+	{
+		$sql = "SELECT * FROM Students ORDER BY Mark";
+			$sql = $this->db->real_escape_string($sql);
+			$result = $this->db->query($sql);
+			if ($this->db->error) die($this->db->error);
+			$data = $result->fetch_all(MYSQLI_ASSOC);
+			foreach ($data as $value) {
+				$student = new Student;
+				$student->setAttributes($value);
+				$obj[] = $student;
+			}
+			return $obj;
 	}
 
 	public function sortStudent($sort,$dir)
@@ -60,34 +72,40 @@ class StudentMapper
 		case 'asc' : $sql .= " ASC";break;
 		case 'desc' : $sql .= " DESC";break;
 		endswitch;
+		$sql = $this->db->real_escape_string($sql);
+			$result = $this->db->query($sql);
+			if ($this->db->error) die($this->db->error);
+			$data = $result->fetch_all(MYSQLI_ASSOC);
+		foreach ($data as $value) {
+				$student = new Student;
+				$student->setAttributes($value);
+				$obj[] = $student;
+			}
+			return $obj;
+
+	}
+
+	public function searchStudents($string = '')
+	{
+		if ($string === '') {
+			$obj =$this->listStudents();
+			return $obj;
+		} else {
+			$sql = "SELECT * FROM Students WHERE CONCAT(Name, Surname, GroupNumber, Mark, BirthDate) like ?"; 
+		
 		$stmt = $this->db->prepare($sql);
+		$reg = "%$string%";
+		$stmt->bind_param('s', $reg);
 		$stmt->execute();
 		$result = $stmt->get_result();
-		$student = $result->fetch_all(MYSQLI_ASSOC);
-		return $student;
-
-	}
-	public function getStudent($pswrd)
-	{
-		$query = "SELECT * FROM Students WHERE pswrd='$pswrd'";
-		$result = $this->db->query($query);
-		$student = $result->fetch_array(MYSQLI_ASSOC);
-		return $student;
-	}
-
-	public function generatePswrd()
-	{
-		$rand = substr(md5(microtime()),rand(0,26),5);
-		$this->pswrd = $rand;
-		return $rand;
-	}
-
-	public function checkEmail($email)
-	{
-		$query = "SELECT * FROM Students WHERE Email= '$email'";
-		$result = $this->db->query($query);
-		if ($result->num_rows === 0)
-			{return 1;} else {return 0;}
-
+		if ($this->db->error) die($this->db->error);
+		$data = $result->fetch_all(MYSQLI_ASSOC);
+		foreach ($data as $value) {
+				$student = new Student;
+				$student->setAttributes($value);
+				$obj[] = $student;
+			}
+			return $obj;
+		}
 	}
 }

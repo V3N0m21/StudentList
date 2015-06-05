@@ -1,5 +1,9 @@
+<form action="" method="get" name="go">
+     <input type="text" class="form-control" placeholder="Поиск среди студентов..." name="search" type="text" size="40">
+</form>
 <table class="table">
 <tr>
+    <tr>
     <td><a href="?page=list&sort=name<?php if($sort =='name' && $dir =='desc') echo '&dir=asc'; ?>">Имя</a></td>
     <td><a href="?page=list&sort=surname<?php if($sort =='surname' && $dir =='desc') echo '&dir=asc'; ?>">Фамилия</td>
     <td><a href="?page=list&sort=sex<?php if($sort =='sex' && $dir =='desc') echo '&dir=asc'; ?>">Пол</td>
@@ -8,16 +12,23 @@
     <td><a href="?page=list&sort=local<?php if($sort =='local' && $dir =='desc') echo '&dir=asc'; ?>">Местный/Приезжий</td>
     <td><a href="?page=list&sort=dateBirth<?php if($sort =='dateBirth' && $dir =='desc') echo '&dir=asc'; ?>">Год рождения</td>
 </tr>
-<?php for ($k = 0; $k < count($data); $k++): ?>
+
+
+<?php for ($i = $paginator->start; $i < $paginator->end; $i++ ) : ?>
 <tr>
-            <td> <?=$data[$k]['Name'] ?></td>
-            <td><?= $data[$k]['Surname'] ?></td>
-            <td><?=$data[$k]['Sex'] ?></td>
-            <td><?=$data[$k]['GroupNumber'] ?></td>
-            <td><?=$data[$k]['Mark'] ?></td>
-            <td><?=$data[$k]['Local'] ?></td>
-            <td><?=$data[$k]['BirthDate'] ?></td>
+            <td> <?=$students[$i]->name?></td> 
+            <td><?= $students[$i]->surname ?></td>
+            <td><?=$students[$i]->sex ?></td>
+            <td><?=$students[$i]->groupNumber ?></td>
+            <td><?=$students[$i]->mark ?></td>
+            <td><?=$students[$i]->local ?></td>
+            <td><?=$students[$i]->birthDate ?></td>
         </tr>
-    <?php endfor ?>
-    <?php echo $text; ?>
+    <?php endfor; ?>
+     <ul>
+    <?php foreach ($pages as $page) : ?>
+   
+        <li><a href="index.php?current=<?php echo $page ?>"><?php echo $page ?></a></li>
+        <?php endforeach; ?>
+    </ul>
 </table>
