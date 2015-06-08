@@ -8,16 +8,23 @@ class StudentMapper
 	public function saveStudent(Student $student)
 	{
 		$stmt = $this->db->prepare("INSERT INTO Students (Name, Surname, Sex, GroupNumber, Email, Mark, Local, BirthDate, pswrd) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		if ($this->db->error) die($this->db->error);
 		$stmt->bind_param('sssssssss', $student->name, $student->surname, $student->sex, $student->groupNumber, $student->email, $student->mark, $student->local, $student->birthDate, $student->pswrd);
 		$stmt->execute();
+		if ($this->db->errno) {
+		die('Update Error (' . $this->db->errno . ') ' . $this->db->error);
+			}
 		$stmt->store_result();
 	}
 	
 	public function updateStudent(Student $student)
 	{
+		
 		$stmt = $this->db->prepare("UPDATE Students SET Name=?,Surname=?, Sex=?, GroupNumber=?,Email=?, Mark=?,Local=?,BirthDate=? WHERE pswrd= ?");
+		if ($this->db->error) die($this->db->error);
 		$stmt->bind_param('sssssssss', $student->name, $student->surname, $student->sex, $student->groupNumber, $student->email, $student->mark, $student->local, $student->birthDate, $student->pswrd);
 		$stmt->execute();
+		
 		$stmt->store_result();
 	}
 
@@ -25,6 +32,7 @@ class StudentMapper
 	{
 		$query = "SELECT * FROM Students WHERE Email='$email'";
 		$result = $this->db->query($query);
+		if ($this->db->error) die($this->db->error);
 		$result = $result->num_rows;
 		if ($result == 0) {
 			return 1;
@@ -35,6 +43,7 @@ class StudentMapper
 	{
 		$query = "SELECT * FROM Students WHERE pswrd='$pswrd'";
 		$result = $this->db->query($query);
+		if ($this->db->error) die($this->db->error);
 		$data = $result->fetch_array(MYSQLI_ASSOC);
 		$student = new Student;
 		$student->setAttributes($data);
@@ -56,7 +65,17 @@ class StudentMapper
 			return $obj;
 	}
 
-	public function sortStudent($sort,$dir)
+	public function countStudents()
+	{
+		$sql = "SELECT count(*) from Students";
+		$sql = $this->db->real_escape_string($sql);
+			$result = $this->db->query($sql);
+			if ($this->db->error) die($this->db->error);
+			$data = $result->fetch_array();
+			return $data[0];
+	}
+
+	public function sortStudent($sort,$dir,$current = 1)
 	{
 		$sql = "SELECT * FROM Students";
 		switch ($sort) :
@@ -72,6 +91,8 @@ class StudentMapper
 		case 'asc' : $sql .= " ASC";break;
 		case 'desc' : $sql .= " DESC";break;
 		endswitch;
+		$start = ($current-1) *10;
+		$sql .= " LIMIT $start, 10";
 		$sql = $this->db->real_escape_string($sql);
 			$result = $this->db->query($sql);
 			if ($this->db->error) die($this->db->error);

@@ -14,7 +14,7 @@
 </tr>
 
 
-<?php for ($i = $paginator->start; $i < $paginator->end; $i++ ) : ?>
+<?php for ($i = 0; $i < 10; $i++ ) : ?>
 <tr>
             <td> <?=$students[$i]->name?></td> 
             <td><?= $students[$i]->surname ?></td>
@@ -25,10 +25,13 @@
             <td><?=$students[$i]->birthDate ?></td>
         </tr>
     <?php endfor; ?>
+     <div class="pagination">
      <ul>
+
     <?php foreach ($pages as $page) : ?>
    
-        <li><a href="index.php?current=<?php echo $page ?>"><?php echo $page ?></a></li>
+        <li><a href="index.php?current=<?php echo $page ?>&sort=<?php echo $sort?>&dir=<?php echo $dir?>"><?php echo $page ?></a></li>
         <?php endforeach; ?>
     </ul>
+</div>
 </table>

@@ -3,6 +3,7 @@ include_once './views/main.php';
 $data = new StudentMapper($conn);
 $sort = 'mark';
 $dir = 'desc';
+$current = 1;
 $columns = array('name', 'surname', 'sex', 'groupNumber', 'mark', 'local', 'dateBirth');
 /*if (isset($_GET['search'])) {
 	$search = $_GET['search'];
@@ -16,24 +17,23 @@ if (isset($_GET['dir']) && in_array($_GET['dir'], array('asc', 'desc'))) {
 if (isset($_GET['sort']) && in_array($_GET['sort'], $columns)) {
 	$sort = $_GET['sort'];
 }
+if(isset($_GET['current'])){
+	$current = $_GET['current'];
+}
 
 if (isset($_GET['search'])) {
 	$search = $_GET['search'];
 	$students = $data->searchStudents($search);
 } else {
-$students = $data->sortStudent($sort, $dir);
+$students = $data->sortStudent($sort, $dir, $current);
 }
-$current = 1;
-
-$rows = count($students);
+$rows = $data->countStudents();
+#$rows = count($students);
 #echo $rows;
-$check = new Validation;
+
 $paginator = new Paginator;
 $pages = $paginator->countPages($rows);
 
-if(isset($_GET['current'])){
-	$current = $_GET['current'];
-}
 
 $currentItem = $paginator->setPages($current,$rows);
 #var_dump($students);
