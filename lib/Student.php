@@ -47,7 +47,7 @@ class Student
 
 	public function generatePswrd()
 	{
-		$rand = substr(md5(microtime()),rand(0,26),5);
+		$rand = substr(md5(microtime()),rand(0,26),20);
 		$this->pswrd = $rand;
 		return $rand;
 	}

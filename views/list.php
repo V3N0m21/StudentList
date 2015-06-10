@@ -1,3 +1,5 @@
+<?php include_once './views/main.php'; ?>
+
 <form action="" method="get" name="go">
      <input type="text" class="form-control" placeholder="Поиск среди студентов..." name="search" type="text" size="40">
 </form>
@@ -14,7 +16,7 @@
 </tr>
 
 
-<?php for ($i = 0; $i < 10; $i++ ) : ?>
+<?php foreach ($students as $i => $student) : ?>
 <tr>
             <td> <?=$students[$i]->name?></td> 
             <td><?= $students[$i]->surname ?></td>
@@ -24,7 +26,7 @@
             <td><?=$students[$i]->local ?></td>
             <td><?=$students[$i]->birthDate ?></td>
         </tr>
-    <?php endfor; ?>
+    <?php endforeach; ?>
      <div class="pagination">
      <ul>
 

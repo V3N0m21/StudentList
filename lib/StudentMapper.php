@@ -22,21 +22,33 @@ class StudentMapper
 		
 		$stmt = $this->db->prepare("UPDATE Students SET Name=?,Surname=?, Sex=?, GroupNumber=?,Email=?, Mark=?,Local=?,BirthDate=? WHERE pswrd= ?");
 		if ($this->db->error) die($this->db->error);
-		$stmt->bind_param('sssssssss', $student->name, $student->surname, $student->sex, $student->groupNumber, $student->email, $student->mark, $student->local, $student->birthDate, $student->pswrd);
+		$stmt->bind_param('sssssssss',
+		 $student->name,
+		 $student->surname,
+		 $student->sex,
+		 $student->groupNumber,
+		 $student->email,
+		 $student->mark,
+		 $student->local,
+		 $student->birthDate,
+		 $student->pswrd);
 		$stmt->execute();
 		
 		$stmt->store_result();
 	}
 
-	public function checkEmail($email)
-	{
-		$query = "SELECT * FROM Students WHERE Email='$email'";
+	public function checkEmail($email, $pswrd)
+	{	
+		$mail = $this->db->real_escape_string($email);
+		$pswrd= $this->db->real_escape_string($pswrd);
+		$query = "SELECT * FROM Students WHERE Email='$mail'";
+		$query .= "AND NOT pswrd='$pswrd'";
 		$result = $this->db->query($query);
 		if ($this->db->error) die($this->db->error);
 		$result = $result->num_rows;
 		if ($result == 0) {
 			return 1;
-		} else {return "Email is not unique";}
+		} else {return 0;}
 	}
 
 	public function getStudent($pswrd)

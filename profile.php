@@ -1,11 +1,11 @@
 <?php
-
-include_once './views/main.php';
+include './lib/init.php';
+# include_once './views/main.php';
 
 #$validation->validate($student);
 #var_dump($validation);
 
-if(isset($_POST['submit']) || isset($_POST['edit']))
+if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 	$student->name = isset($_POST['Name']) ? strval($_POST['Name']) : '';
 	$student->surname = isset($_POST['Surname']) ? strval($_POST['Surname']) : '';
@@ -15,36 +15,28 @@ if(isset($_POST['submit']) || isset($_POST['edit']))
 	$student->mark = isset($_POST['Mark']) ? strval($_POST['Mark']) : '';
 	$student->local = isset($_POST['Local']) ? strval($_POST['Local']) : '';
 	$student->birthDate = isset($_POST['BirthDate']) ? strval($_POST['BirthDate']) : '';
-	$validation->validate($student);
-	$email = $data->checkEmail($student->email);
+	$validation->validate($student, $data);
+	#$email = $data->checkEmail($student->email);
 	if (isset($_POST['submit'])) {
 
-	if (count($validation->errors) == 0 && $email == 1) {
-		$student->pswrd = $student->generatePswrd();
+	if (!$validation->hasErrors()) {
+		$student->generatePswrd();
 		setcookie('user', $student->pswrd, time()+ 60*60*60*24*365, '/');
 		$data->saveStudent($student);
-		echo "Success!!";
-		header("Location: http://zend.tut/");
-	} else {
-		echo $email;
-		foreach ($validation->errors as $error) {
-			echo $error . "<br>";
-		}
-	}
-	} else {if (isset($_POST['edit'])) {
-		if (count($validation->errors) == 0) {
+		header("Location: /?notify=saved");
+	} 
+
+	} else {if (isset($_POST['edit']) && isset($student->pswrd)) {
+		if (!$validation->hasErrors()) {
 			$data->updateStudent($student);
-		echo "Success!!";
-		header("Location: http://zend.tut/");
-		} else {
-			foreach ($validation->errors as $error) {
-			echo $error . "<br>";
-		}
+		
+		header("Location: /?notify=updated");
+		} 
 	}
 
 	}
 
-}
+
 }
 
 

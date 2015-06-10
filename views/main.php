@@ -1,8 +1,9 @@
 <?php include 'header.php';
-	  include './lib/init.php';
+	  #include './lib/init.php';
 	   ?>
 <div>
-<ul>
+	<p class="text-info"><?php if (isset($message)) {echo $message;} ?></p>
+<ul class="inline">
 	<li><a href='index.php'>Главная</a></li>
 	<?php if (!isset($_COOKIE['user'])) : ?>
 	<li><a href='profile.php'>Регистрация</a></li>
