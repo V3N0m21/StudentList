@@ -6,13 +6,13 @@
 <table class="table">
 <tr>
     <tr>
-    <td><a href="?page=list&sort=name<?php if($sort =='name' && $dir =='desc') echo '&dir=asc'; ?>">Имя</a></td>
-    <td><a href="?page=list&sort=surname<?php if($sort =='surname' && $dir =='desc') echo '&dir=asc'; ?>">Фамилия</td>
-    <td><a href="?page=list&sort=sex<?php if($sort =='sex' && $dir =='desc') echo '&dir=asc'; ?>">Пол</td>
-    <td><a href="?page=list&sort=groupNumber<?php if($sort =='groupNumber' && $dir =='desc') echo '&dir=asc'; ?>">Группа</td>
-    <td><a href="?page=list&sort=mark<?php if($sort =='mark' && $dir =='desc') echo '&dir=asc'; ?>">Средний бал</td>
-    <td><a href="?page=list&sort=local<?php if($sort =='local' && $dir =='desc') echo '&dir=asc'; ?>">Местный/Приезжий</td>
-    <td><a href="?page=list&sort=dateBirth<?php if($sort =='dateBirth' && $dir =='desc') echo '&dir=asc'; ?>">Год рождения</td>
+    <td><a href="?page=list&amp;sort=name<?php if($sort =='name' && $dir =='desc') echo '&dir=asc'; ?>&amp;search=<?php echo $search?>">Имя</a></td>
+    <td><a href="?page=list&amp;sort=surname<?php if($sort =='surname' && $dir =='desc') echo '&dir=asc'; ?>&amp;search=<?php echo $search?>">Фамилия</td>
+    <td><a href="?page=list&amp;sort=sex<?php if($sort =='sex' && $dir =='desc') echo '&dir=asc'; ?>&amp;search=<?php echo $search?>">Пол</td>
+    <td><a href="?page=list&amp;sort=groupNumber<?php if($sort =='groupNumber' && $dir =='desc') echo '&dir=asc'; ?>&amp;search=<?php echo $search?>">Группа</td>
+    <td><a href="?page=list&amp;sort=mark<?php if($sort =='mark' && $dir =='desc') echo '&dir=asc'; ?>&amp;search=<?php echo $search?>">Средний бал</td>
+    <td><a href="?page=list&amp;sort=local<?php if($sort =='local' && $dir =='desc') echo '&dir=asc'; ?>&amp;search=<?php echo $search?>">Местный/Приезжий</td>
+    <td><a href="?page=list&amp;sort=dateBirth<?php if($sort =='dateBirth' && $dir =='desc') echo '&dir=asc'; ?>">Год рождения</td>
 </tr>
 
 
@@ -32,7 +32,7 @@
 
     <?php foreach ($pages as $page) : ?>
    
-        <li><a href="index.php?current=<?php echo $page ?>&sort=<?php echo $sort?>&dir=<?php echo $dir?>"><?php echo $page ?></a></li>
+        <li><a href="index.php?current=<?php echo $page ?>&amp;sort=<?php echo $sort?>&amp;dir=<?php echo $dir?>&amp;search=<?php echo $search?>"><?php echo $page ?></a></li>
         <?php endforeach; ?>
     </ul>
 </div>

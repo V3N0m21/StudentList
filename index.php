@@ -4,6 +4,7 @@ include './lib/init.php';
 $data = new StudentMapper($conn);
 $sort = 'mark';
 $dir = 'desc';
+$search = '';
 $current = 1;
 $columns = array('name', 'surname', 'sex', 'groupNumber', 'mark', 'local', 'dateBirth');
 
@@ -23,12 +24,12 @@ if(isset($_GET['current'])){
 
 if (isset($_GET['search'])) {
 	$search = $_GET['search'];
-	$students = $data->searchStudents($search);
+	$students = $data->searchStudents($search, $sort, $dir, $current);
+	$rows = $data->countSearchStudents($search);
 } else {
 $students = $data->sortStudent($sort, $dir, $current);
-}
-
 $rows = $data->countStudents();
+}
 
 $paginator = new Paginator;
 $pages = $paginator->countPages($rows);

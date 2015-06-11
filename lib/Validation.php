@@ -26,12 +26,7 @@ class Validation
 
 		if ($data->checkEmail($student->email, $student->pswrd) !== 1) 
 		{$this->errors['email'] = "Такая почта уже зарегистрирована";}
-				
-		if (count($errors) == 0) {
-			return true;
-	} else {
-		return $errors;
-	}
+		
 }
 
 	public function hasErrors()

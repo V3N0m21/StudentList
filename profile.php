@@ -1,5 +1,14 @@
 <?php
 include './lib/init.php';
+if (!isset($_COOKIE['token']))
+{
+	$token = $student->generatePswrd(5);
+	$student->setToken($token);
+} else {
+	$token = $_COOKIE['token'];
+	$student->setToken($token);
+}
+
 # include_once './views/main.php';
 
 #$validation->validate($student);
@@ -19,14 +28,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 	#$email = $data->checkEmail($student->email);
 	if (isset($_POST['submit'])) {
 
-	if (!$validation->hasErrors()) {
+	if (!$validation->hasErrors() && $token == $_COOKIE['token']) {
 		$student->generatePswrd();
-		setcookie('user', $student->pswrd, time()+ 60*60*60*24*365, '/');
+		$student->authStudent($student->pswrd);
 		$data->saveStudent($student);
 		header("Location: /?notify=saved");
 	} 
 
-	} else {if (isset($_POST['edit']) && isset($student->pswrd)) {
+	} else {if (isset($_POST['edit']) && isset($student->pswrd) && $token == $_COOKIE['token']) {
 		if (!$validation->hasErrors()) {
 			$data->updateStudent($student);
 		
