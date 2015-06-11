@@ -24,7 +24,7 @@ class Validation
 	if (!preg_match("/^(19|20)[0-9]{2}$/u", $student->birthDate))
 	 {$this->errors['birthDate'] = "Год рождения нужно вводить в формате 19xx\\20xx";}
 
-		if ($data->checkEmail($student->email, $student->pswrd) !== 1) 
+		if ($data->checkEmail($student->email, $student->password) !== 1) 
 		{$this->errors['email'] = "Такая почта уже зарегистрирована";}
 		
 }

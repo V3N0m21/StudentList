@@ -7,9 +7,9 @@ class StudentMapper
 	}
 	public function saveStudent(Student $student)
 	{
-		$stmt = $this->db->prepare("INSERT INTO Students (Name, Surname, Sex, GroupNumber, Email, Mark, Local, BirthDate, pswrd) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		$stmt = $this->db->prepare("INSERT INTO Students (Name, Surname, Sex, GroupNumber, Email, Mark, Local, BirthDate, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		if ($this->db->error) throw new Exception($this->db->error);
-		$stmt->bind_param('sssssssss', $student->name, $student->surname, $student->sex, $student->groupNumber, $student->email, $student->mark, $student->local, $student->birthDate, $student->pswrd);
+		$stmt->bind_param('sssssssss', $student->name, $student->surname, $student->sex, $student->groupNumber, $student->email, $student->mark, $student->local, $student->birthDate, $student->password);
 		$stmt->execute();
 		if ($this->db->errno) {
 		throw new Exception('Update Error (' . $this->db->errno . ') ' . $this->db->error);
@@ -20,7 +20,7 @@ class StudentMapper
 	public function updateStudent(Student $student)
 	{
 		
-		$stmt = $this->db->prepare("UPDATE Students SET Name=?,Surname=?, Sex=?, GroupNumber=?,Email=?, Mark=?,Local=?,BirthDate=? WHERE pswrd= ?");
+		$stmt = $this->db->prepare("UPDATE Students SET Name=?,Surname=?, Sex=?, GroupNumber=?,Email=?, Mark=?,Local=?,BirthDate=? WHERE password= ?");
 		if ($this->db->error) throw new Exeption($this->db->error);
 		$stmt->bind_param('sssssssss',
 		 $student->name,
@@ -31,18 +31,18 @@ class StudentMapper
 		 $student->mark,
 		 $student->local,
 		 $student->birthDate,
-		 $student->pswrd);
+		 $student->password);
 		$stmt->execute();
 		
 		$stmt->store_result();
 	}
 
-	public function checkEmail($email, $pswrd)
+	public function checkEmail($email, $password)
 	{	
 		$mail = $this->db->real_escape_string($email);
-		$pswrd= $this->db->real_escape_string($pswrd);
+		$password= $this->db->real_escape_string($password);
 		$query = "SELECT * FROM Students WHERE Email='$mail'";
-		$query .= "AND NOT pswrd='$pswrd'";
+		$query .= "AND NOT password='$password'";
 		$result = $this->db->query($query);
 		if ($this->db->error) throw new Exception($this->db->error);
 		$result = $result->num_rows;
@@ -51,9 +51,9 @@ class StudentMapper
 		} else {return 0;}
 	}
 
-	public function getStudent($pswrd)
+	public function getStudent($password)
 	{
-		$query = "SELECT * FROM Students WHERE pswrd='$pswrd'";
+		$query = "SELECT * FROM Students WHERE password='$password'";
 		$result = $this->db->query($query);
 		if ($this->db->error) throw new Exception($this->db->error);
 		$data = $result->fetch_array(MYSQLI_ASSOC);
@@ -124,7 +124,7 @@ class StudentMapper
 	public function searchStudents($string = '', $sort,$dir,$current = 1)
 	{
 		if ($string === '') {
-			$obj =$this->listStudents();
+			$obj =$this->sortStudent($sort, $dir, $current);
 			return $obj;
 		} else {
 			$sql = "SELECT * FROM Students WHERE CONCAT(Name, Surname, GroupNumber, Mark, BirthDate) like ?";

@@ -9,7 +9,7 @@ class Student
 	public $mark;
 	public $local;
 	public $birthDate;
-	public $pswrd;
+	public $password;
 
 	public function __construct()
 	{
@@ -26,7 +26,7 @@ class Student
 		$this->mark = $data['Mark'];
 		$this->local = $data['Local'];
 		$this->birthDate = $data['BirthDate'];
-		$this->pswrd = $data['pswrd'];
+		$this->password = $data['password'];
 	}
 
 	public function getAttributes()
@@ -40,27 +40,27 @@ class Student
 			$this->mark,
 			$this->local,
 			$this->birthDate,
-			$this->pswrd
+			$this->password
 			);
 		return $info;
 	}
 
-	public function authStudent($pswrd)
+	public function authStudent($password)
 	{
-		setcookie('user', $pswrd, time()+ 60*60*60*24*365, '/');
+		setcookie('user', $password, time()+ 60*60*60*24*365, '/');
 	}
 	public function setToken($token)
 	{
 		setcookie('token', $token, time()+ 60*60*60, '/');
 	}
-	public function generatePswrd($length = 10) {
+	public function generatePassword($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
     for ($i = 0; $i < $length; $i++) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
-    return $randomString;
+    $this->password =  $randomString;
 }
 
 }

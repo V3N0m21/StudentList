@@ -2,7 +2,7 @@
 include './lib/init.php';
 if (!isset($_COOKIE['token']))
 {
-	$token = $student->generatePswrd(5);
+	$token = $student->generatePassword(5);
 	$student->setToken($token);
 } else {
 	$token = $_COOKIE['token'];
@@ -29,13 +29,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 	if (isset($_POST['submit'])) {
 
 	if (!$validation->hasErrors() && $token == $_COOKIE['token']) {
-		$student->generatePswrd();
-		$student->authStudent($student->pswrd);
+		$student->generatePassword();
+		$student->authStudent($student->password);
 		$data->saveStudent($student);
 		header("Location: /?notify=saved");
 	} 
 
-	} else {if (isset($_POST['edit']) && isset($student->pswrd) && $token == $_COOKIE['token']) {
+	} else {if (isset($_POST['edit']) && isset($student->password) && $token == $_COOKIE['token']) {
 		if (!$validation->hasErrors()) {
 			$data->updateStudent($student);
 		
