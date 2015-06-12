@@ -1,14 +1,15 @@
 <?php
 
 spl_autoload_register(function ($class) {
-	#if (file_exists($class. '.php')) {
+	#if (file_exists($class.'.php')) {
 	require $class . '.php';
-#	}
+	#}
 });
 require_once('config.php');
 require_once('functions.php');
 $conn = new mysqli($hostname, $username, $password, $database);
 $conn->set_charset("utf8");
+$conn->query("SET sql_mode='STRICT_ALL_TABLES'");
 if ($conn->connect_error) die ($conn->connect_error);
 $path = dirname(__DIR__);
 $data = new StudentMapper($conn);

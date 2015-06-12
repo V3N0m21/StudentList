@@ -1,6 +1,5 @@
 <?php
 include './lib/init.php';
-
 $data = new StudentMapper($conn);
 $sort = 'mark';
 $dir = 'desc';
