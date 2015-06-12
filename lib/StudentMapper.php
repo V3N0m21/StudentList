@@ -33,29 +33,38 @@ class StudentMapper
 		 $student->birthDate,
 		 $student->password);
 		$stmt->execute();
+		if ($this->db->error) throw new Exeption($this->db->error);
 		
 		$stmt->store_result();
 	}
 
 	public function checkEmail($email, $password)
 	{	
-		$mail = $this->db->real_escape_string($email);
+		$email = $this->db->real_escape_string($email);
 		$password= $this->db->real_escape_string($password);
-		$query = "SELECT * FROM Students WHERE Email='$mail'";
-		$query .= "AND NOT password='$password'";
-		$result = $this->db->query($query);
+		$stmt = $this->db->prepare("SELECT count(*) FROM Students WHERE Email=? AND password<>?");
 		if ($this->db->error) throw new Exception($this->db->error);
-		$result = $result->num_rows;
-		if ($result == 0) {
+		$stmt->bind_param('ss',
+						$email,
+						$password);
+		$stmt->execute();
+		if ($this->db->error) throw new Exception($this->db->error);
+		$result = $stmt->get_result();
+		$result = $result->fetch_array();
+		if ($result[0] == 0) {
 			return 1;
 		} else {return 0;}
 	}
 
 	public function getStudent($password)
 	{
-		$query = "SELECT * FROM Students WHERE password='$password'";
-		$result = $this->db->query($query);
+		$password = $this->db->real_escape_string($password);
+		$stmt = $this->db->prepare("SELECT * FROM Students WHERE password=?");
 		if ($this->db->error) throw new Exception($this->db->error);
+		$stmt->bind_param('s', $password);
+		$stmt->execute();
+		if ($this->db->error) throw new Exception($this->db->error);
+		$result = $stmt->get_result();
 		$data = $result->fetch_array(MYSQLI_ASSOC);
 		if (!$data) {
 			return null;
@@ -84,7 +93,6 @@ class StudentMapper
 	public function countStudents()
 	{
 		$sql = "SELECT count(*) from Students";
-		$sql = $this->db->real_escape_string($sql);
 			$result = $this->db->query($sql);
 			if ($this->db->error) throw new Exception($this->db->error);
 			$data = $result->fetch_array();
@@ -145,9 +153,11 @@ class StudentMapper
 		$sql .= " LIMIT $start, 10"; 
 		
 		$stmt = $this->db->prepare($sql);
+		if ($this->db->error) throw new Exception($this->db->error);
 		$reg = "%$string%";
 		$stmt->bind_param('s', $reg);
 		$stmt->execute();
+		if ($this->db->error) throw new Exception($this->db->error);
 		$result = $stmt->get_result();
 		if ($this->db->error) throw new Exception($this->db->error);
 		$data = $result->fetch_all(MYSQLI_ASSOC);
@@ -156,7 +166,9 @@ class StudentMapper
 				$student->setAttributes($value);
 				$obj[] = $student;
 			}
+			if (!empty($obj)) {
 			return $obj;
+		} else {return null;}
 		}
 	}
 
@@ -164,9 +176,11 @@ class StudentMapper
 	{
 		$sql = "SELECT count(*) FROM Students WHERE CONCAT(Name, Surname, GroupNumber, Mark, BirthDate) like ?";
 		$stmt = $this->db->prepare($sql);
+		if ($this->db->error) throw new Exception($this->db->error);
 		$reg = "%$string%";
 		$stmt->bind_param('s', $reg);
 		$stmt->execute();
+		if ($this->db->error) throw new Exception($this->db->error);
 		$result = $stmt->get_result();
 		if ($this->db->error) throw new Exception($this->db->error);
 		$data = $result->fetch_array();

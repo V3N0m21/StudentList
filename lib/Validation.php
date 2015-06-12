@@ -8,10 +8,10 @@ class Validation
 	public function validate(Student $student, StudentMapper $data)
 	{
 
-	if (!preg_match("/^[А-Яа-яЁё\s']{1,}$/u", $student->name))
+	if (!preg_match("/^[А-Яа-яЁё\s'-]{1,}$/u", $student->name))
 	 {$this->errors['name'] = "Имя введено неверно";}
 
-	if (!preg_match("/^[А-Яа-яЁё\s']{1,}$/u", $student->surname))
+	if (!preg_match("/^[А-Яа-яЁё\s'-]{1,}$/u", $student->surname))
 	 {$this->errors['surname'] = "Фамилия введена неверно";}
 
 	if (!preg_match("/^.{1,6}$/u", $student->groupNumber))

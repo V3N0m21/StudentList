@@ -16,7 +16,7 @@ class Student
 
 	}
 
-	public function setAttributes($data)
+	public function setAttributes(array $data)
 	{
 		$this->name = $data['Name'];
 		$this->surname = $data['Surname'];
@@ -45,22 +45,6 @@ class Student
 		return $info;
 	}
 
-	public function authStudent($password)
-	{
-		setcookie('user', $password, time()+ 60*60*60*24*365, '/');
-	}
-	public function setToken($token)
-	{
-		setcookie('token', $token, time()+ 60*60*60, '/');
-	}
-	public function generatePassword($length = 10) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    $this->password =  $randomString;
-}
+	
 
 }

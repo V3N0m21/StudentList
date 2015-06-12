@@ -2,11 +2,11 @@
 include './lib/init.php';
 if (!isset($_COOKIE['token']))
 {
-	$token = $student->generatePassword(5);
-	$student->setToken($token);
+	$token = generatePassword(16);
+	setToken($token);
 } else {
 	$token = $_COOKIE['token'];
-	$student->setToken($token);
+	setToken($token);
 }
 
 # include_once './views/main.php';
@@ -29,17 +29,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 	if (isset($_POST['submit'])) {
 
 	if (!$validation->hasErrors() && $token == $_COOKIE['token']) {
-		$student->generatePassword();
-		$student->authStudent($student->password);
+		$password = generatePassword();
+		$student->password = $password;
+		authStudent($student->password);
 		$data->saveStudent($student);
-		header("Location: /?notify=saved");
+		header("Location: /?notify=saved");die();
 	} 
 
 	} else {if (isset($_POST['edit']) && isset($student->password) && $token == $_COOKIE['token']) {
 		if (!$validation->hasErrors()) {
 			$data->updateStudent($student);
 		
-		header("Location: /?notify=updated");
+		header("Location: /?notify=updated");die();
 		} 
 	}
 

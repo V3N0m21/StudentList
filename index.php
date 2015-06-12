@@ -31,9 +31,8 @@ $students = $data->sortStudent($sort, $dir, $current);
 $rows = $data->countStudents();
 }
 
-$paginator = new Paginator;
-$pages = $paginator->countPages($rows);
+$paginator = new Paginator($rows, $current);
+$pages = $paginator->countPages();
+$currentItem = $paginator->setPages();
 
-
-$currentItem = $paginator->setPages($current,$rows);
 include_once './views/list.php';

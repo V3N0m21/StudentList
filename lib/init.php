@@ -1,12 +1,13 @@
 <?php
 
 spl_autoload_register(function ($class) {
-	#if (class_exists($class. '.php')) {
+	#if (file_exists($class. '.php')) {
 	require $class . '.php';
-	#}
+#	}
 });
 require_once('config.php');
-$conn = new mysqli($hn, $un, $pw, $dbn);
+require_once('functions.php');
+$conn = new mysqli($hostname, $username, $password, $database);
 $conn->set_charset("utf8");
 if ($conn->connect_error) die ($conn->connect_error);
 $path = dirname(__DIR__);
