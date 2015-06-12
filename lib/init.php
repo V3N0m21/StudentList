@@ -1,7 +1,7 @@
 <?php
 
 spl_autoload_register(function ($class) {
-	#if (file_exists($class.'.php')) {
+	#if (file_exists($path)) {
 	require $class . '.php';
 	#}
 });

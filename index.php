@@ -33,5 +33,4 @@ $rows = $data->countStudents();
 $paginator = new Paginator($rows, $current);
 $pages = $paginator->countPages();
 $currentItem = $paginator->setPages();
-
 include_once './views/list.php';
