@@ -7,25 +7,24 @@ class Paginator {
 	public $end;
 	public $pages;
 	public $rows;
+	public $numbers;
 
 	public function __construct($rows, $current)
 	{
 		$this->itemsPerPage = 10;
-		$this->currentItem = 0;
 		$this->currentPage = $current;
 		$this->rows = $rows;
-		$this->start = 0;
 		$this->end = 10;
+		$this->pages = ceil($this->rows/$this->itemsPerPage);
+		$this->numbers = array();
 	}
 
 	public function countPages()
 	{
-		$this->pages = ceil($this->rows/$this->itemsPerPage);
+		
 		for($x=1;$x<=$this->pages; $x++)
-			{$numbers[] = $x;}
-		if (!empty($numbers)) {
-			return $numbers;
-		} else {return null;}
+			{$this->numbers[] = $x;}
+			return $this->numbers;
 	}
 
 	public function setPages()
@@ -48,9 +47,9 @@ class Paginator {
 	function pagesLinks($page, $sort, $dir, $search)
 {
 	$link = "?current=$page";
-	$link .= "&amp;sort=$sort";
-	$link .= "&amp;dir=$dir";
-	$link .= "&amp;search=" . h($search);
+	$link .= "&sort=$sort";
+	$link .= "&dir=$dir";
+	$link .= "&search=" . u($search);
 	return $link;
 }
 

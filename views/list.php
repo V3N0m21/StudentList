@@ -1,44 +1,45 @@
 <?php include_once './views/main.php'; ?>
 
 <form action="" method="get" name="go">
-     <input type="text" class="form-control" placeholder="Поиск среди студентов..." name="search" type="text" size="40">
+     <input type="text" class="form-control" placeholder="Введите имя студента здесь" value="<?= !empty($students) ? $search : '';?>" name="search" type="text" size="40">
 </form>
+<p><?= !empty($search) && !empty($students) ? "Показаны студенты соответствующие запросу '$search'" : ''; ?></p>
 <?php if (empty($students)) : ?>
-    <p><?= "Студент с такими данными не найден в базе"?></p>
+    <p class="text-warning"><?= "Студент с такими данными не найден в базе"?></p>
 <?php else : ?> 
-<table class="table">
+<table class="table table-striped">
 <tr>
     <tr>
-    <td><a href="?sort=name<?php if($sort =='name' && $dir =='desc') echo '&dir=asc'; ?>&amp;search=<?php echo u($search)?>">Имя</a></td>
-    <td><a href="?sort=surname<?php if($sort =='surname' && $dir =='desc') echo '&dir=asc'; ?>&amp;search=<?php echo u($search)?>">Фамилия</td>
-    <td><a href="?sort=sex<?php if($sort =='sex' && $dir =='desc') echo '&dir=asc'; ?>&amp;search=<?php echo u($search)?>">Пол</td>
-    <td><a href="?sort=groupNumber<?php if($sort =='groupNumber' && $dir =='desc') echo '&dir=asc'; ?>&amp;search=<?php echo u($search)?>">Группа</td>
-    <td><a href="?sort=mark<?php if($sort =='mark' && $dir =='desc') echo '&dir=asc'; ?>&amp;search=<?php echo u($search)?>">Средний бал</td>
-    <td><a href="?sort=local<?php if($sort =='local' && $dir =='desc') echo '&dir=asc'; ?>&amp;search=<?php echo u($search)?>">Местный/Приезжий</td>
-    <td><a href="?sort=dateBirth<?php if($sort =='dateBirth' && $dir =='desc') echo '&dir=asc'; ?>&amp;search=<?php echo u($search)?>">Год рождения</td>
+    <td><a href="<?=getSortingLink('name', $sort, $dir, $search)?>"><?=getArrow('name',$sort,$dir)?>Имя</a></td>
+    <td><a href="<?=getSortingLink('surname', $sort, $dir, $search)?>"><?=getArrow('surname',$sort,$dir)?>Фамилия</td>
+    <td><a href="<?=getSortingLink('sex', $sort, $dir, $search)?>"><?=getArrow('sex',$sort,$dir)?>Пол</td>
+    <td><a href="<?=getSortingLink('groupNumber', $sort, $dir, $search)?>"><?=getArrow('groupNumber',$sort,$dir)?>Группа</td>
+    <td><a href="<?=getSortingLink('mark', $sort, $dir, $search)?>"><?=getArrow('mark',$sort,$dir)?>Средний бал</td>
+    <td><a href="<?=getSortingLink('local', $sort, $dir, $search)?>"><?=getArrow('local',$sort,$dir)?>Местный/Приезжий</td>
+    <td><a href="<?=getSortingLink('dateBirth', $sort, $dir, $search)?>"><?=getArrow('dateBirth',$sort,$dir)?>Год рождения</td>
 </tr>
 
 <?php foreach ($students as $i => $student) : ?>
 <tr>
             <td><?=h($student->name)?></td> 
             <td><?=h($student->surname) ?></td>
-            <td><?=h($student->sex) ?></td>
+            <td><?=h($student->displaySex()) ?></td>
             <td><?=h($student->groupNumber) ?></td>
             <td><?=h($student->mark) ?></td>
-            <td><?=h($student->local) ?></td>
+            <td><?=h($student->displayLocal()) ?></td>
             <td><?=h($student->birthDate) ?></td>
         </tr>
     <?php endforeach; ?>
     </table>
 
     <?php if(count($pages) !== 1) : ?>
-     <div class="pagination">
-     <ul>
+     <div>
+     <ul class="pagination">
 
     <?php foreach ($pages as $page) : ?>
    
         <li<?= $page == $current ? ' class ="active"' : "" ?>>
-        <a href="<?=$paginator->pagesLinks($page, $sort, $dir, $search)?>"><?= h($page) ?></a></li>
+        <a href="<?=h($paginator->pagesLinks($page, $sort, $dir, $search))?>"><?= h($page) ?></a></li>
         <?php endforeach; ?>
     </ul>
 </div>

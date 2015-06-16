@@ -3,6 +3,6 @@
 <head lang = "en">
 	<meta charset="UTF-8">
 	<title>Список студентов</title>
-	<link href="../css/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link type="text/css" href="./css/css/bootstrap.min.css" rel="stylesheet" media="screen" type="text/css">
 </head>
 <body>

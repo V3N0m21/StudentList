@@ -27,8 +27,23 @@ function generatePassword($length = 10) {
     return $randomString;
 }
 
-function getSortingLink($column, $dir, $search)
+function getSortingLink($column, $sort, $dir, $search)
 {
+	$link = "?sort=$column";
+	if ($sort == $column && $dir == 'desc') $link .= '&dir=asc';
+	$link .= "&search=$search";
+	u($link);
+	return $link;
+}
 
+function getArrow ($column, $sort, $dir)
+{
+	if ($column == $sort){
+		if ($dir == 'desc'){
+			return "&#8595;";
+		} else {
+			return "&#8593;";
+		}
+	}
 }
 

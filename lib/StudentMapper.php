@@ -38,22 +38,23 @@ class StudentMapper
 		$stmt->store_result();
 	}
 
-	public function checkEmail($email, $password)
+	public function checkEmail($email, $password = "")
 	{	
-		$email = $this->db->real_escape_string($email);
-		$password= $this->db->real_escape_string($password);
 		$stmt = $this->db->prepare("SELECT count(*) FROM Students WHERE Email=? AND password<>?");
 		if ($this->db->error) throw new Exception($this->db->error);
 		$stmt->bind_param('ss',
 						$email,
 						$password);
+
 		$stmt->execute();
 		if ($this->db->error) throw new Exception($this->db->error);
 		$result = $stmt->get_result();
 		$result = $result->fetch_array();
-		if ($result[0] == 0) {
+		if ($result[0] !== 0) {
+			return 0;
+		} else {
 			return 1;
-		} else {return 0;}
+		} 
 	}
 
 	public function getStudent($password)

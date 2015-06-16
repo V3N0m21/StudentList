@@ -29,22 +29,17 @@ class Student
 		$this->password = $data['password'];
 	}
 
-	public function getAttributes()
+	public function displaySex()
 	{
-		$info = array(
-			$this->name,
-			$this->surname,
-			$this->sex,
-			$this->groupNumber,
-			$this->email,
-			$this->mark,
-			$this->local,
-			$this->birthDate,
-			$this->password
-			);
-		return $info;
+		if ($this->sex == "M") {
+			return "Мужской";
+		} else { return "Женский";}
 	}
 
-	
-
+	public function displayLocal()
+	{
+		if ($this->local == "L") {
+			return "Местный";
+		} else { return "Приезжий";}
+	}
 }

@@ -3,9 +3,14 @@
 class Validation
 {
 	public $errors;
+	public $data;
 
+	public function __construct(StudentMapper $data)
+	{
+		$this->data = $data;
+	}
 	
-	public function validate(Student $student, StudentMapper $data)
+	public function validate(Student $student)
 	{
 
 	if (!preg_match("/^[А-Яа-яЁё\s'-]{1,}$/u", $student->name))
@@ -20,11 +25,12 @@ class Validation
 	if (!preg_match("/.+@.+\..+/i", $student->email))
 	 {$this->errors['email'] = "Введен некорректный e-mail";}
 
-	if ($student->mark < 165) {$this->errors['mark'] = "Оценка за ЕГЭ слишком низкая";}
+	if ($student->mark < 165)
+	 {$this->errors['mark'] = "Оценка за ЕГЭ слишком низкая";}
 	if (!preg_match("/^(19|20)[0-9]{2}$/u", $student->birthDate))
 	 {$this->errors['birthDate'] = "Год рождения нужно вводить в формате 19xx\\20xx";}
-
-		if ($data->checkEmail($student->email, $student->password) !== 1) 
+	$password = isset($student->password) ? $student->password : "";
+		if ($this->data->checkEmail($student->email, $password) !== 1) 
 		{$this->errors['email'] = "Такая почта уже зарегистрирована";}
 		
 }
@@ -33,6 +39,8 @@ class Validation
 	{
 		if (count($this->errors) !== 0) {
 			return 1;
-		} else { return 0;}
+		} else {
+		 return 0;
+		}
 	}
 }

@@ -1,31 +1,116 @@
 <?php include_once './views/main.php'; ?>
+<form class="form-horizontal" action="profile.php" method="post">
+<div class="form-group <?= !empty($validation->errors['name']) ? "has-error" : '' ?>">
+<label for="Name" class="control-label col-sm-2">
+Имя:
+</label>
+<div class="col-sm-3">
+<input type="text" class="form-control" id="Name" name="Name" placeholder="Введите имя"
+value="<?=h($student->name);?>">
+</div>
+<p class="text-danger">
+	<?= !empty($validation->errors['name']) ? $validation->errors['name'] : "" ?> 		
+	</p>
+</div>
 
-<form action="profile.php" method="post">
-Имя:<br> <input type="text" name="Name" value="<?=htmlspecialchars($student->name);?>">
-<?php if (isset($validation->errors['name'])) {echo $validation->errors['name'];} ?><br>
-Фамилия:<br> <input type="text" name="Surname" value="<?=htmlspecialchars($student->surname);?>">
-<?php if (isset($validation->errors['surname'])) {echo $validation->errors['surname'];} ?><br>
-Пол:<br>
-<input type="radio" name="Sex" value="M" 
-<?php echo (isset($student->sex) && $student->sex == 'M' ? "checked" : ""); ?>>Мужской<br>
-<input type="radio" name="Sex" value="F"
-<?php echo (isset($student->sex) && $student->sex == 'F' ? "checked" : ""); ?>>Женский<br><br>
-Номер группы:<br> <input type="text" name="GroupNumber" value="<?=htmlspecialchars($student->groupNumber);?>">
-<?php if (isset($validation->errors['groupNumber'])) {echo $validation->errors['groupNumber'];} ?><br>
-e-mail:<br> <input type="email" name="Email" value="<?=htmlspecialchars($student->email);?>">
-<?php if (isset($validation->errors['email'])) {echo $validation->errors['email'];} ?><br>
-Оценка за ЕГЭ:<br> <input type="text" name="Mark" value="<?=htmlspecialchars($student->mark);?>">
-<?php if (isset($validation->errors['mark'])) {echo $validation->errors['mark'];} ?><br>
-Местный\Приезжий: <br><input type="radio" name="Local" value="L"
-							 <?php echo (isset($student->local) && $student->local == 'L' ? "checked" : ""); ?>>  Местный  <br>
-					  <input type="radio" name="Local" value="N"
-					  <?php echo (isset($student->local) && $student->local == 'N' ? "checked" : "");?>>  Приезжий 
-<br>Год рождения:<br> <input type="text" name="BirthDate" value="<?=htmlspecialchars($student->birthDate);?>">
-<?php if (isset($validation->errors['birthDate'])) {echo $validation->errors['birthDate'];} ?><br>
+<div class="form-group <?= !empty($validation->errors['surname']) ? "has-error" : '' ?>">
+<label for="Surname" class="control-label col-sm-2">
+Фамилия:
+</label>
+<div class="col-sm-3">
+<input type="text" class="form-control" id="Surname" name="Surname" placeholder="Введите фамилию"
+value="<?=h($student->surname);?>">
+</div>
+<p class="text-danger">
+	<?= !empty($validation->errors['surname']) ? $validation->errors['surname'] : "" ?> 		
+	</p>
+</div>
+
+<label class="control-label col-sm-2">
+	Пол:
+</label>
+<div class="cotrol-group col-sm-offset-2">
+<div class="radio">
+<label for="M"><input type="radio" name="Sex" id="M" value="M" 
+<?php echo (isset($student->sex) && $student->sex == 'M' ? "checked" : ""); ?>>Мужской</label>
+</div>
+<div class="radio">
+<label for="F"><input type="radio" name="Sex" id="F" value="F"
+<?php echo (isset($student->sex) && $student->sex == 'F' ? "checked" : ""); ?>>Женский</label>
+</div>
+</div>
+<br>
+
+<div class="form-group <?= !empty($validation->errors['groupNumber']) ? "has-error" : '' ?>">
+<label for="GroupNumber" class="control-label col-sm-2">
+Номер группы:
+</label>
+<div class="col-sm-3">
+<input type="text" class="form-control" id="GroupNumber" name="GroupNumber" placeholder="Введите номер группы"
+value="<?=h($student->groupNumber);?>">
+</div>
+<p class="text-danger">
+	<?= !empty($validation->errors['groupNumber']) ? $validation->errors['groupNumber'] : "" ?> 		
+	</p>
+</div>
+
+<div class="form-group <?= !empty($validation->errors['email']) ? "has-error" : '' ?>">
+<label for="Email" class="control-label col-sm-2">
+e-mail:
+</label>
+<div class="col-sm-3">
+<input type="email" class="form-control" id="Email" name="Email" placeholder="Введите адрес электронной почты"
+value="<?=h($student->email);?>">
+</div>
+<p class="text-danger">
+	<?= !empty($validation->errors['email']) ? $validation->errors['email'] : "" ?> 		
+	</p>
+</div>
+
+<div class="form-group <?= !empty($validation->errors['mark']) ? "has-error" : '' ?>">
+<label for="Mark" class="control-label col-sm-2">
+Оценка за ЕГЭ:
+</label>
+<div class="col-sm-3">
+<input type="text" class="form-control" id="Mark" name="Mark" placeholder="Укажите оценку за ЕГЭ"
+value="<?=h($student->mark);?>">
+</div>
+<p class="text-danger">
+	<?= !empty($validation->errors['mark']) ? $validation->errors['mark'] : "" ?></p> 		
+</div>
+
+<label class="control-label col-sm-2">
+	Местный\Приезжий:
+</label>
+<div class="cotrol-group col-sm-offset-2">
+<div class="radio">
+<label for="L"><input type="radio" name="Local" id="L" value="L" 
+<?php echo (isset($student->local) && $student->local == 'L' ? "checked" : ""); ?>>Местный</label>
+</div>
+<div class="radio">
+<label for="N"><input type="radio" name="Local" id="N" value="N"
+<?php echo (isset($student->local) && $student->local == 'N' ? "checked" : ""); ?>>Приезжий</label>
+</div>
+</div>
+<br>
+<div class="form-group <?= !empty($validation->errors['birthDate']) ? "has-error" : '' ?>">
+<label for="BirthDate" class="control-label col-sm-2">
+Год рождения:
+</label>
+<div class="col-sm-3">
+<input type="text" class="form-control" id="BirthDate" name="BirthDate" placeholder="19хх\20хх"
+value="<?=h($student->birthDate);?>">
+</div>
+<p class="text-danger">
+	<?= !empty($validation->errors['birthDate']) ? $validation->errors['birthDate'] : "" ?>
+	</p> 		
+</div>
 <input type="hidden" name="token" value="<?= htmlspecialchars($token, ENT_QUOTES) ?>">
+<div class="col-sm-offset-2">
 <?php if (!isset($user)) : ?>
-	<input type="submit" name="submit" value="Ввести данные">
+	<input type="submit" name="submit" class="btn btn-primary" value="Ввести данные">
 <?php else : ?>
-	<input type="submit" name="edit" value="Редактировать мои данные">
+	<input type="submit" name="edit" class="btn btn-primary" value="Редактировать мои данные">
 <?php endif; ?>
+</div>
 </form>
