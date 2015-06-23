@@ -3,6 +3,8 @@ include './lib/init.php';
 $data = new StudentMapper($conn);
 $sort = 'mark';
 $dir = 'desc';
+$message = '';
+$page = "index";
 $search = '';
 $current = 1;
 $columns = array('name', 'surname', 'sex', 'groupNumber', 'mark', 'local', 'dateBirth');
@@ -32,5 +34,4 @@ $rows = $data->countStudents();
 
 $paginator = new Paginator($rows, $current);
 $pages = $paginator->countPages();
-$currentItem = $paginator->setPages();
 include_once './views/list.php';

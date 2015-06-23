@@ -1,7 +1,7 @@
 <?php include_once './views/main.php'; ?>
 
 <form action="" method="get" name="go">
-     <input type="text" class="form-control" placeholder="Введите имя студента здесь" value="<?= !empty($students) ? $search : '';?>" name="search" type="text" size="40">
+     <input type="text" class="form-control" placeholder="Введите имя студента здесь" value="<?= !empty($students) ? h($search) : '';?>" name="search" type="text" size="40">
 </form>
 <p><?= !empty($search) && !empty($students) ? "Показаны студенты соответствующие запросу '$search'" : ''; ?></p>
 <?php if (empty($students)) : ?>
@@ -39,7 +39,7 @@
     <?php foreach ($pages as $page) : ?>
    
         <li<?= $page == $current ? ' class ="active"' : "" ?>>
-        <a href="<?=h($paginator->pagesLinks($page, $sort, $dir, $search))?>"><?= h($page) ?></a></li>
+        <a href="?<?=h($paginator->pagesLinks($page, $sort, $dir, $search))?>"><?= h($page) ?></a></li>
         <?php endforeach; ?>
     </ul>
 </div>

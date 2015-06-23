@@ -9,7 +9,7 @@
 value="<?=h($student->name);?>">
 </div>
 <p class="text-danger">
-	<?= !empty($validation->errors['name']) ? $validation->errors['name'] : "" ?> 		
+	<?= !empty($validation->errors['name']) ? h($validation->errors['name']) : "" ?> 		
 	</p>
 </div>
 
@@ -22,7 +22,7 @@ value="<?=h($student->name);?>">
 value="<?=h($student->surname);?>">
 </div>
 <p class="text-danger">
-	<?= !empty($validation->errors['surname']) ? $validation->errors['surname'] : "" ?> 		
+	<?= !empty($validation->errors['surname']) ? h($validation->errors['surname']) : "" ?> 		
 	</p>
 </div>
 
@@ -32,11 +32,11 @@ value="<?=h($student->surname);?>">
 <div class="cotrol-group col-sm-offset-2">
 <div class="radio">
 <label for="M"><input type="radio" name="Sex" id="M" value="M" 
-<?php echo (isset($student->sex) && $student->sex == 'M' ? "checked" : ""); ?>>Мужской</label>
+<?php echo ($student->sex == 'M' ? "checked" : ""); ?>>Мужской</label>
 </div>
 <div class="radio">
 <label for="F"><input type="radio" name="Sex" id="F" value="F"
-<?php echo (isset($student->sex) && $student->sex == 'F' ? "checked" : ""); ?>>Женский</label>
+<?php echo ($student->sex == 'F' ? "checked" : ""); ?>>Женский</label>
 </div>
 </div>
 <br>
@@ -50,7 +50,7 @@ value="<?=h($student->surname);?>">
 value="<?=h($student->groupNumber);?>">
 </div>
 <p class="text-danger">
-	<?= !empty($validation->errors['groupNumber']) ? $validation->errors['groupNumber'] : "" ?> 		
+	<?= !empty($validation->errors['groupNumber']) ? h($validation->errors['groupNumber']) : "" ?> 		
 	</p>
 </div>
 
@@ -63,7 +63,7 @@ e-mail:
 value="<?=h($student->email);?>">
 </div>
 <p class="text-danger">
-	<?= !empty($validation->errors['email']) ? $validation->errors['email'] : "" ?> 		
+	<?= !empty($validation->errors['email']) ? h($validation->errors['email']) : "" ?> 		
 	</p>
 </div>
 
@@ -76,7 +76,7 @@ value="<?=h($student->email);?>">
 value="<?=h($student->mark);?>">
 </div>
 <p class="text-danger">
-	<?= !empty($validation->errors['mark']) ? $validation->errors['mark'] : "" ?></p> 		
+	<?= !empty($validation->errors['mark']) ? h($validation->errors['mark']) : "" ?></p> 		
 </div>
 
 <label class="control-label col-sm-2">
@@ -102,7 +102,7 @@ value="<?=h($student->mark);?>">
 value="<?=h($student->birthDate);?>">
 </div>
 <p class="text-danger">
-	<?= !empty($validation->errors['birthDate']) ? $validation->errors['birthDate'] : "" ?>
+	<?= !empty($validation->errors['birthDate']) ? h($validation->errors['birthDate']) : "" ?>
 	</p> 		
 </div>
 <input type="hidden" name="token" value="<?= htmlspecialchars($token, ENT_QUOTES) ?>">

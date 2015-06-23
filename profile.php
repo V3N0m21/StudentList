@@ -1,5 +1,6 @@
 <?php
 include './lib/init.php';
+$page = "profile";
 if (!isset($_COOKIE['token']))
 {
 	$token = generatePassword(16);
@@ -31,8 +32,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 	if (!$validation->hasErrors() && $token == $_COOKIE['token']) {
 		$password = generatePassword();
 		$student->password = $password;
-		authStudent($student->password);
 		$data->saveStudent($student);
+		authStudent($student->password);
 		header("Location: /?notify=saved");die();
 	} 
 

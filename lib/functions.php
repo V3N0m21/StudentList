@@ -31,8 +31,8 @@ function getSortingLink($column, $sort, $dir, $search)
 {
 	$link = "?sort=$column";
 	if ($sort == $column && $dir == 'desc') $link .= '&dir=asc';
+	$search = u($search);
 	$link .= "&search=$search";
-	u($link);
 	return $link;
 }
 
