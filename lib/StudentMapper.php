@@ -24,11 +24,11 @@ class StudentMapper
         
         $stmt = $this->db->prepare("UPDATE Students SET Name=?,Surname=?, Sex=?, GroupNumber=?,Email=?, Mark=?,Local=?,BirthDate=? WHERE password= ?");
         if ($this->db->error)
-            throw new Exeption($this->db->error);
+            throw new Exception($this->db->error);
         $stmt->bind_param('sssssssss', $student->name, $student->surname, $student->sex, $student->groupNumber, $student->email, $student->mark, $student->local, $student->birthDate, $student->password);
         $stmt->execute();
         if ($this->db->error)
-            throw new Exeption($this->db->error);
+            throw new Exception($this->db->error);
         
         $stmt->store_result();
     }
@@ -153,7 +153,7 @@ class StudentMapper
             $obj = $this->sortStudent($sort, $dir, $current);
             return $obj;
         } else {
-            $sql = "SELECT * FROM Students WHERE CONCAT(Name, Surname, GroupNumber, Mark, BirthDate) like ?";
+            $sql = "SELECT * FROM Students WHERE CONCAT(Name, Surname, GroupNumber, Mark, BirthDate) COLLATE utf8_general_ci like ?";
             switch ($sort) {
                 case 'name':
                     $sql .= " Order by Name";

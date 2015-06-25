@@ -9,6 +9,16 @@ function u($in)
 	return urlencode($in);
 }
 
+function loggedIn()
+{
+	if(isset($_COOKIE['user'])){
+		return 1;
+	} else {
+		return 0;
+	}
+
+}
+
 function authStudent($password)
 	{
 		setcookie('user', $password, time()+ 60*60*60*24*365, '/');

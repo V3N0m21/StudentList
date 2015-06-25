@@ -25,8 +25,16 @@ class Validation
 	if (!preg_match("/.+@.+\..+/i", $student->email))
 	 {$this->errors['email'] = "Введен некорректный e-mail";}
 
-	if ($student->mark < 165)
-	 {$this->errors['mark'] = "Оценка за ЕГЭ слишком низкая";}
+	if (!in_array($student->sex, array('F','M'))) {
+		$this->errors['sex'] = "Укажите пол";
+	}
+
+	if (!in_array($student->local, array('L','N'))) {
+		$this->errors['local'] = "Укажите резидентность";
+	}
+
+	if ($student->mark < 165 || !preg_match("/^[0-9]{3}$/u", $student->mark))
+	 {$this->errors['mark'] = "Оценка за ЕГЭ слишком низкая или некорректная";}
 	if (!preg_match("/^(19|20)[0-9]{2}$/u", $student->birthDate))
 	 {$this->errors['birthDate'] = "Год рождения нужно вводить в формате 19xx\\20xx";}
 	$password = isset($student->password) ? $student->password : "";

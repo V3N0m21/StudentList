@@ -40,7 +40,6 @@ class Paginator {
 	function pagesLinks($page, $sort, $dir, $search)
 {
 	
-	$search = u($search);
 	$data = array('current' => "$page",
 				  'sort' =>"$sort",
 				  "dir"=>"$dir",

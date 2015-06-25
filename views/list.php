@@ -3,7 +3,7 @@
 <form action="" method="get" name="go">
      <input type="text" class="form-control" placeholder="Введите имя студента здесь" value="<?= !empty($students) ? h($search) : '';?>" name="search" type="text" size="40">
 </form>
-<p><?= !empty($search) && !empty($students) ? "Показаны студенты соответствующие запросу '$search'" : ''; ?></p>
+<p><?= !empty($search) && !empty($students) ? "Показаны студенты соответствующие запросу '".h($search)."'" : ''; ?></p>
 <?php if (empty($students)) : ?>
     <p class="text-warning"><?= "Студент с такими данными не найден в базе"?></p>
 <?php else : ?> 

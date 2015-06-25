@@ -1,12 +1,13 @@
 <?php
-$path = dirname(__DIR__);
+
 spl_autoload_register(function ($class) {
-	#$file = $path."/".$class.".php";
-	#if (file_exists($file)) {
+	$path = dirname(__DIR__);
+	$file = $path."/lib/".$class.".php";
+	if (file_exists($file)) {
+	  
 	require $class . '.php';
-	#echo $file.'<br>';
-	#echo "/var/www/StudentList/" . $class. '.php'."<br>";
-	#}
+	
+	}else {var_dump($file);var_dump($class);}
 });
 require_once('config.php');
 require_once('functions.php');
